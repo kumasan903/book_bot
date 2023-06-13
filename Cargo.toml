@@ -1,5 +1,5 @@
 [package]
-name = "flightplan_bot"
+name = "book_bot"
 version = "0.1.0"
 edition = "2021"
 

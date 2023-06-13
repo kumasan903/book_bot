@@ -21,36 +21,10 @@ impl EventHandler for Handler
 		{
 			return ;
 		}
-		if msg.content.starts_with("(FPL")
+		if msg.content.starts_with("978")
 		{
-			let author = msg.author.name.to_string();
-			let raw_fpl_text = msg.content;
-			let raw_lines:Vec<&str> = raw_fpl_text.split('\n').collect();
-			let callsign:Vec<&str> = raw_lines[0].split('-').collect();
-			let callsign = callsign[1];
-			let aircraft_type = raw_lines[1].to_string();
-			let aircraft_type = &aircraft_type[1..7];
-			let from = raw_lines[2].to_string();
-			let from = &from[1..5];
-			let to = raw_lines[4];
-			let to = &to[1..5];
-			let mut route = raw_lines[3].to_string();
-			for _ in 1..12
-			{
-				route.remove(0);
-			}
-			let cruise_altitude:Vec<&str> = raw_lines[3].split(' ').collect();
-			let mut cruise_altitude = cruise_altitude[0].to_string();
-			for _ in 1..8
-			{
-				cruise_altitude.remove(0);
-			}
-			let mut eobt = raw_lines[2].to_string();
-			for _ in 1..6
-			{
-				eobt.remove(0);
-			}
-			let response_message = format!("パイロット　：{author}\nコールサイン：{callsign}\n出発地　　　：{from}\n到着地　　　：{to}\n巡航高度　　：FL{cruise_altitude}\nルート　　　：`{route}`\n機体　　　　：{aircraft_type}\nEOBT   　　　：{eobt}z\n");
+			let raw_message = msg.content;
+			let response_message = format!("https://cover.openbd.jp/{raw_message}.jpg\n");
 			if let Err(why) = msg.channel_id.say(&ctx.http, response_message).await
 			{
 				println!("Error sending message: {:?}", why);
